@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html ng-app='CourseMark'>
+    <head>
+        <title>Course Mark</title>
+        <script type='text/javascript' src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="src/js/semantic.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+        <script type="text/javascript" src="src/js/app.js"></script>
+        <link rel="stylesheet" href="src/css/semantic.min.css"></link>
+        <link rel="stylesheet" href="src/css/main.css">
+    </head>
+    <body ng-controller="CourseMarkCtrl">
+        <div class="ui fluid inverted menu">
+            <h3 class="header item"><i class="bookmark icon"></i>Course Mark</h3>
+            <div class="text item">Hello, {{user}}</div>
+            <a class="item right addNew"><i class="add circle icon"></i> Add new</a>
+            <a class="item right options"><i class="setting icon"></i> Settings</a>
+        </div>
+        <div class="ui stackable three column centered padded grid">
+            <div class="column">
+                <div class="ui icon message" ng-show="courses.length===0">
+                    <i class="announcement icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Looks like you don't have any classes.
+                        </div>
+                        <button class="ui positive labeled icon button addNew">
+                            <i class="add circle icon"></i>
+                                Add a class now</button>
+                    </div>
+                </div>
+                <ul style="list-style: none" ng-show="courses.length!==0">
+                    <li class= "course" ng-repeat="course in courses" >
+                        <div class="ui center aligned segment" ng-class="'{{course.color}}'">
+                            <div class="ui corner label hidden"><a><i class="trash icon" ng-click="deleteCourse(course.id)"></i></a></div>
+                            <a class="item" ng-href="{{course.link}}"><h1>{{course.text}}</h1></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="ui modal">
+            <i class="close icon"></i>
+            <div class="header">
+                Add Course
+            </div>
+            <div class="content">
+                <div class="ui small form segment">
+                    <div class="field">
+                        <label>Title</label>
+                        <input type="text" ng-model="text" required>
+                    </div>
+                    <div class="field">
+                        <label>Link</label>
+                        <input type="url" ng-model="link" required>
+                    </div>
+
+                </div>
+            </div>
+            <div class="actions">
+                <button class="ui positive right labeled icon button" ng-click="newCourse()">
+                    Add
+                    <i class="add icon"></i>
+                </button>
+            </div>
+        </div>
+        <script>
+        $(function(){
+            $("ul").on('mouseenter','div',function(){
+                $(this).addClass("inverted");
+                $(this).find(".label").removeClass("hidden");
+            });
+            $("ul").on('mouseleave','div',function(){
+                $(this).removeClass("inverted");
+                $(this).find(".label").addClass("hidden");
+            });
+            $('.ui.modal').modal();
+            $(".addNew").click(function(){
+                $('.ui.modal').modal('show');
+
+            });
+        });
+        </script>
+    </body>
+</html>
